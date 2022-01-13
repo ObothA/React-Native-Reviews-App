@@ -5,8 +5,11 @@ import {
   Nunito_200ExtraLight,
   Nunito_700Bold,
 } from '@expo-google-fonts/nunito';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
 
-import Home from './screens/home';
+import HomeStack from './routes/homeStack';
+import About from './screens/about';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -14,12 +17,20 @@ export default function App() {
     Nunito_700Bold,
   });
 
+  const Drawer = createDrawerNavigator();
+
   if (!fontsLoaded) {
     return <AppLoading />;
   } else {
     return (
       <>
-        <Home />
+        <NavigationContainer>
+          <Drawer.Navigator initialRouteName='Home'>
+            <Drawer.Screen name='Home' component={HomeStack} />
+            <Drawer.Screen name='About' component={About} />
+          </Drawer.Navigator>
+        </NavigationContainer>
+        {/* <HomeStack /> */}
         <StatusBar style='auto' />
       </>
     );
